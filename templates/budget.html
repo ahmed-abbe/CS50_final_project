@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Budget
+{% endblock %}
+
+{% block main %}
+    <main class="budget">
+        <form action="/budget" method="post" class="d-flex align-items-center justify-content-center column-med-screen">
+            <div>
+                <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="item" name="item" placeholder="Item" type="text">
+            </div>
+            <div>
+                <input required autocomplete="off" class="form-control mx-auto w-auto" id="qun" name="qun" placeholder="Quantity" min="1" type="number">
+            </div>
+            <div>
+                <input required autocomplete="off" class="form-control mx-auto w-auto" id="price" name="price" step="0.01" placeholder="Price" min="0.01" type="number">
+            </div>
+            <div>
+                <Select class="form-select mx-auto w-auto" name="type" id="type">
+                    <option disabled selected>Income/Withdraw</option>
+                    <option value="income">Income</option>
+                    <option value="withdraw">Withdraw</option>
+                </Select>
+            </div>
+            <button class="btn btn-primary" type="submit">
+                Add
+            </button>
+        </form>
+        <div class="container d-flex align-items-start flex-wrap">
+            {% if income %}
+            <div class="responsive-table">
+                <table class="table tab;e-strriped text-center">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Cost</th>
+                            <th>total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in income %}
+                        <tr>
+                            <td>{{ row.item }}</td>
+                            <td>{{ row.qun }}</td>
+                            <td>{{ row.price | usd }}</td>
+                            <td class="green">{{ (row.price * row.qun) | usd }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+            {% if withdraw %}
+            <div class="responsive-table">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Cost</th>
+                            <th>total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in withdraw %}
+                        <tr>
+                            <td>{{ row.item }}</td>
+                            <td>{{ row.qun }}</td>
+                            <td>{{ row.price | usd }}</td>
+                            <td class="red">{{ (row.price * row.qun * -1) | usd }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+            {% if income or withdraw %}
+            <table class="table total">
+                <tbody>
+                    <tr>
+                        <td>Overall income</td>
+                        <td class="green text-center">{{ income_sum | usd }}</td>
+                    </tr>
+                    <tr>
+                        <td>Overall withdraw</td>
+                        <td class="red text-center">{{ withdraw_sum | usd }}</td>
+                    </tr>
+                        <td>Total</td>
+                            {% set total = income_sum + withdraw_sum %}
+                            {% if total > 0 %}
+                            <td class="green text-center">{{ total | usd }}</td>
+                            {% else %}
+                            <td class="red text-center">{{ total | usd }}</td>
+                            {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+            <form action="/bdelete" method="post" class="d-flex align-items-center justify-content-center column-med-screen">
+                <div>
+                    <Select class="form-select mx-auto w-auto" name="item" id="item">
+                        <option disabled selected>Income/Withdraw</option>
+                        {% if income %}
+                        <optgroup label="Income">
+                        {% for row in income %}
+                            <option value="{{ row.id }}">{{ row.item }}</option>
+                        {% endfor %}
+                        </optgroup>
+                        {% endif %}
+                        {% if withdraw %}
+                        <optgroup label="Withdraw">
+                        {% for row in withdraw %}
+                            <option value="{{ row.id }}">{{ row.item }}</option>
+                        {% endfor %}
+                        </optgroup>
+                        {% endif %}
+                    </Select>
+                </div>
+                <button class="btn btn-primary" type="submit">
+                    Delete
+                </button>
+            </form>
+            {% endif %}
+        </div>
+    </main>
+
+{% endblock %}

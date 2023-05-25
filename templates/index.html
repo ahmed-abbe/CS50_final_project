@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Main
+{% endblock %}
+
+{% block main %}
+    <main class="main">
+        <div class="content">
+            <div class="imgs-column">
+                <p class="title text-center">
+                    Random images
+                </p>
+                <div>
+                    <img decoding="async" src="https://picsum.photos/1920/1080?random=1.jpg" alt="Random image">
+                </div>
+                <div>
+                    <img decoding="async" src="https://picsum.photos/1920/1080?random=2.jpg" alt="Random image">
+                </div>
+                <div>
+                    <img decoding="async" src="https://picsum.photos/1920/1080?random=3.jpg" alt="Random image">
+                </div>
+            </div>
+            <div class="tables text-center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>To-do</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if todo %}
+                        {% for row in todo %}
+                        <tr>
+                            <td>{{ row.todo }}</td>
+                            <td class="text-center">{{ row.time }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td class="text-center" colspan="2" >Nothing in yout to-do list</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="2">Budget</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% if income_sum or withdraw_sum %}
+                        <tr>
+                            <td>Overall income</td>
+                            <td class="green text-center">{{ income_sum | usd }}</td>
+                        </tr>
+                        <tr>
+                            <td>Overall withdraw</td>
+                            <td class="red text-center">{{ withdraw_sum | usd }}</td>
+                        </tr>
+                            <td>Total</td>
+                            {% set total = income_sum + withdraw_sum %}
+                            {% if total > 0 %}
+                                <td class="green text-center">{{ total | usd }}</td>
+                            {% else %}
+                                <td class="red text-center">{{ total | usd }}</td>
+                            {% endif %}
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td class="text-center">Nothing in your budget</td>
+                        </tr>
+                    {% endif %}
+                        </tbody>
+                </table>
+            </div>    
+        </div>
+    </main>
+{% endblock %}

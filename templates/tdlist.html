@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    To-do list
+{% endblock %}
+
+{% block main %}
+    <main class="td-list">
+        <form action="/tdlist" method="post" class="d-flex align-items-center justify-content-center column-mobile">
+            <div>
+                <input autocomplete="off" required autofocus class="form-control mx-auto w-auto" id="todo" name="todo" placeholder="Add to your list" type="text">
+            </div>
+            <div>
+                <input required class="form-control mx-auto w-auto" id="time" name="time" type="time">
+            </div>
+            <button class="btn btn-primary" type="submit">
+                Add
+            </button>
+        </form>
+        <div class="container">
+            {% if table %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-start">To Do</th>
+                            <th class="text-center">time</th>
+                            <th class="text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in table %}
+                        <tr>
+                            <td class="text-start">{{ row.todo }}</td>
+                            <td class="text-center">{{ row.month }}/{{ row.day }} {{ row.time }}</td>
+                            <td class="text-center">
+                                <form action="/delete" method="post">
+                                    <input type="hidden" name="id" value="{{ row.id }}">
+                                    <button class="btn btn-primary" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="text-center">
+                            <td colspan="3">Note: Your To-do list will be deleted automatically Everyday</td>
+                        </tr>
+                    </tfoot>
+                </table>
+        {% endif %}
+        </div>
+    </main>
+{% endblock %}

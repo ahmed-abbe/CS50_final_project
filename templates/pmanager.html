@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Password manager
+{% endblock %}
+
+{% block main %}
+    <main class="manager">
+        <div class="container">
+            <form action="/pmanager" method="post" class="card text-center">
+                <div>
+                    <input autocomplete="off" required class="form-control mx-auto w-auto" id="name" name="name" placeholder="website name" type="text">
+                </div>
+                <div>
+                    <input autocomplete="off" required class="form-control mx-auto w-auto" id="password" name="password" placeholder="website password" type="text">
+                </div>
+                <div>
+                    <input autocomplete="off" class="form-control mx-auto w-auto" id="link" name="link" placeholder="website Link (optional)" type="url">
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </div>
+            </form>
+            {% if cards %}
+            {% for card in cards %}
+            <div class="card text-center">
+                <h2>{{ card.name }}</h2>
+                <h3>{{ card.password }}</h3>
+                {% if card.link %}
+                <a href="{{ card.link }}">Go to {{ card.name }}</a>
+                {% endif %}
+                <form action="/pdelete" method="post">
+                    <div>
+                        <input id="id" name="id" type="hidden" value="{{ card.id }}">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" type="submit">Delete</button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

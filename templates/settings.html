@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block main %}
+    <main class="settings">
+        <div class="container column-mobile">
+            <form action="/change" method="post" class="d-flex align-items-center justify-content-evenly flex-wrap column-mobile">
+                <h2 class="text-center">Change password</h2>
+                <div>
+                    <input required class="form-control mx-auto w-auto" id="oldpassword" name="oldpassword" placeholder="Old password" type="password">
+                </div>
+                <div>
+                    <input required class="form-control mx-auto w-auto" id="newpassword" name="newpassword" placeholder="New password" type="password">
+                </div>
+                <div>
+                    <input required class="form-control mx-auto w-auto" id="confirm" name="confirm" placeholder="Confirm new password" type="password">
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit">Change</button>
+                </div>
+            </form>
+            <form action="/delete_account" method="post" class="d-flex align-items-center justify-content-evenly flex-wrap column-mobile">
+                <h2 class="text-center">Delete your account</h2>
+                <div>
+                    <input required autocomplete="off" class="form-control mx-auto w-auto" id="name" name="name" placeholder="Username" type="text">
+                </div>
+                <div>
+                    <input required class="form-control mx-auto w-auto" id="delete" name="password" placeholder="Password" type="password">
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit">Delete</button>
+                </div>
+            </form>
+        </div>
+    </main>
+{% endblock %}
