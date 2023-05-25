@@ -1,5 +1,4 @@
-# Organized 
-#### Website Demo: 
+# Organized  
 #### Video Demo:   https://youtu.be/SbG0ulev_ys
 #### Description: 
 Hello eceryone,
