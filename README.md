@@ -16,4 +16,4 @@ In addition to these features, Organized also allows users to change their passw
 
 Overall, Organized is a user-friendly, all-in-one solution for keeping track of daily tasks, managing finances, and storing passwords securely. With its easy-to-use interface and accessible features, Organized is an ideal platform for individuals who desire a simplified approach to organization.
 
-Note; i used the code cs50 finance give and edit it on my way
+Note: i used the code of cs50 finance give and edit it on my way
